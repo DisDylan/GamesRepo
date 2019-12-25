@@ -1,0 +1,42 @@
+# depslib dependency file v1.0
+1577048011 source:/home/utilisateur/Documents/monProgramme/main.cpp
+	<iostream>
+	<string>
+	<cmath>
+	"math.h"
+	"seconds.h"
+
+1577047195 source:/home/utilisateur/Documents/monProgramme/math.cpp
+	"math.h"
+
+1577048011 /home/utilisateur/Documents/monProgramme/math.h
+
+1577048353 /home/utilisateur/Documents/monProgramme/seconds.h
+
+1577053515 source:/home/utilisateur/Documents/monProgramme/seconds.cpp
+	"seconds.h"
+
+1577047195 source:/home/utilisateur/Documents/prog_c--/monProgramme/math.cpp
+	"math.h"
+
+1577048011 /home/utilisateur/Documents/prog_c--/monProgramme/math.h
+
+1577053515 source:/home/utilisateur/Documents/prog_c--/monProgramme/seconds.cpp
+	"seconds.h"
+
+1577048353 /home/utilisateur/Documents/prog_c--/monProgramme/seconds.h
+
+1577128361 source:/home/utilisateur/Documents/prog_c--/monProgramme/main.cpp
+	<iostream>
+	<string>
+	<vector>
+	<cmath>
+	"math.h"
+	"seconds.h"
+	"moyenneArray.h"
+
+1577130763 /home/utilisateur/Documents/prog_c--/monProgramme/moyenneArray.h
+
+1577130763 source:/home/utilisateur/Documents/prog_c--/monProgramme/moyenneArray.cpp
+	"moyenneArray.h"
+
