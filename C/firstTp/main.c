@@ -6,25 +6,55 @@
 int main(int argc, char *argv[])
 {
     int inGame = 1;
-    while (inGame){
-        const int MAX = 100, MIN = 1;
-        srand(time(NULL));
-        int mysteryNumber = (rand() % (MAX - MIN + 1)) + MIN;
-        
+    while (inGame) {
+
+        int numberPlayers = 0;
+        printf("Jouer a 1 ou 2 joueur(s) ? \n");
+        scanf("%d", &numberPlayers);
+        int mysteryNumber = 0;
+
+        if (numberPlayers == 1) {
+            printf("Quelle difficulte choisissez vous ?\n1. FACILE\n2. MOYEN\n3. DIFFICILE\n");
+            const int MIN = 1;
+            int difficult;
+            int maxNumber;
+            scanf("%d", &difficult);
+            switch (difficult) {
+                case 1:
+                    maxNumber = 100;
+                    break;
+                case 2:
+                    maxNumber = 1000;
+                    break;
+                case 3:
+                    maxNumber = 10000;
+                    break;
+                default:
+                    break;
+            }
+            srand(time(NULL));
+            mysteryNumber = (rand() % (maxNumber - MIN + 1)) + MIN;
+
+        } else {
+            mysteryNumber = 0;
+            printf("Saisissez le nombre mystere a trouver: ");
+            scanf("%d", &mysteryNumber);
+        }
+
         int numberEntry = 0;
         int compteurCoups = 0;
-        
+
         printf("=!=!=BIENVENUE A TOI=!=!=\n");
         printf("Tu dois trouver le bon nombre choisi par l'ordinateur..\n");
         //printf(".. attention ! Tu n'as que 7 essais !\n\n");
-        
+
         do {
             printf("Entre un nombre : ");
             scanf("%d", &numberEntry);
             if (numberEntry > mysteryNumber) {
-                printf("C'est moins !\n");            
+                printf("C'est moins !\n");
             } else if (numberEntry < mysteryNumber) {
-                printf("C'est plus !\n");            
+                printf("C'est plus !\n");
             }
             compteurCoups++;
         } while (numberEntry != mysteryNumber);
