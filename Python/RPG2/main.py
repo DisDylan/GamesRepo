@@ -6,9 +6,18 @@ Main module to execute the game
 from variables import ITEMS
 from functions import fight
 from functions import makeEnnemies
+from functions import showStats
+from functions import upgradeStats
 from classes import Ennemy
+from classes import Hero
 
 def main():
+
+    print("Bienvenue dans l'aventure de tous les dangers !")
+    yourHero = Hero(input("Indiquez votre nom d'aventurier : "))
+    print("\nBienvenue à toi {} ! Nous allons distribuer tes caracteristiques.")
+    showStats(yourHero)
+    upgradeStats(yourHero)
     """
     Main function to test
     """

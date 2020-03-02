@@ -80,3 +80,41 @@ def makeEnnemies(func, base, number, liste):
         new_monster = func(('Monster' + str((i + base))), (base + i))
         liste.append(new_monster)
     return liste
+
+def showStats(character):
+    """
+    Function to show stats and points of our hero
+    """
+    print("Tu es actuellement niveau {} avec:\n{} points de vie,\n{} en force,\n{} en vitesse.".format(character.level, character.hps, character.strength, character.speed))
+
+def upgradeStats(character):
+    """
+    Function to verify if you have stats points, and ask to user if he want use them
+    """
+    print("Tu as {} points de caracteristiques a distribuer.".format(character.sp))
+    if character.sp > 0:
+        choice = input("Utiliser des points (o/n): ")
+        if choice.lower() == "o":
+            statToUp = input("Quelle statistique augmenter ?\n(F)orce = 1 pour 1;\n(V)ie = 1 pour 5;\n(S)Vitesse = 1 pour 2;\nVotre choix : ")
+            if statToUp.lower() == "f":
+                character.strength += 1
+                character.sp -= 1
+                upgradeStats(character)
+            elif statToUp.lower() == "v":
+                character.hps += 5
+                character.sp -= 1
+                upgradeStats(character)
+            elif statToUp.lower() == "s":
+                character.speed += 1
+                character.sp -= 1
+                upgradeStats(character)
+            else:
+                print("Entrée inconnue ... Veuillez saisir un choix valide.")
+                upgradeStats(character)
+        elif choice.lower() == "n":
+            return
+        else:
+            print("Entrée inconnue ... Veuillez saisir un choix valide.")
+            upgradeStats(character)
+    else:
+        return

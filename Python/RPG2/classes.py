@@ -42,3 +42,15 @@ class Ennemy():
 
     def __repr__(self):
         return '==========\n{}:\n----------\nNiveau: {}\n----------\nPoints de vie: {}\n----------\nDégats: {}\n=========='.format(self.name, self.level, self.hps, self.strength)
+
+class Hero():
+    """
+    Main class for the character of the user
+    """
+    def __init__(self, name):
+        self.name = name
+        self.level = 1
+        self.sp = 3
+        self.strength = 2
+        self.hps = 10
+        self.speed = 4
