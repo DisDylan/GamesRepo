@@ -3,6 +3,10 @@
 """
 Module with functions for main py
 """
+from random import randrange
+from variables import XP_STAGE
+from classes import Hero
+
 def velocity(hero, ennemy):
     """
     Return fighter with the higher speed value
@@ -16,7 +20,7 @@ def game_over(character):
     """
     Return true if our hero die
     """
-    if character.hps <= 0:
+    if character.hp <= 0:
         return True
     return False
 
@@ -33,18 +37,18 @@ def fight_order(char_fast, char_slow):
             print('Goodbye !!')
             return exit()
         print('::::::::::\n{} a l\'initiative:\n::::::::::'.format(char_fast.name))
-    char_slow.hps -= char_fast.strength
+    char_slow.hp -= char_fast.dmgDeal
     if game_over(char_slow):
-        print('\n{} a quitter notre monde\n'.format(char_slow.name))
+        print('\n{} a quitté notre monde\n'.format(char_slow.name))
         TURN = 1
         return char_slow
-    print('{} subi {} de dégats. Il lui reste {} points de vie.'.format(char_slow.name, char_fast.strength, char_slow.hps))
-    char_fast.hps -= char_slow.strength
+    print('{} subi {} de dégats. Il lui reste {} points de vie.'.format(char_slow.name, char_fast.dmgDeal, char_slow.hp))
+    char_fast.hp -= char_slow.dmgDeal
     if game_over(char_fast):
-        print('\n\n{} a quitter notre monde\n'.format(char_fast.name))
+        print('\n\n{} a quitté notre monde\n'.format(char_fast.name))
         TURN = 1
         return char_fast
-    print('{} subi {} de dégats. Il lui reste {} points de vie.'.format(char_fast.name, char_slow.strength, char_fast.hps))
+    print('{} subi {} de dégats. Il lui reste {} points de vie.'.format(char_fast.name, char_slow.dmgDeal, char_fast.hp))
     TURN += 1
     return None
 
@@ -62,6 +66,10 @@ def fight(hero, ennemy):
         return quit()
     elif fighters == ennemy:
         print('Vous avez vaincu !\n')
+        hero.xp += ennemy.xp
+        hero.gold += ennemy.gold
+        if hero.levelUp(XP_STAGE) == 1:
+            upgradeStats(hero)
         return
     else:
         choice = input('Continuer à se battre(Touche entrée) ou quitter(Autre touche) ? ')
@@ -72,20 +80,14 @@ def fight(hero, ennemy):
         fight(hero, ennemy)
 
 
-def makeEnnemies(func, base, number, liste):
+def makeEnnemies(func, base, number, liste, hero):
     """
     Test a function to create a number of ennemies
     """
     for i in range(number):
-        new_monster = func(('Monster' + str((i + base))), (base + i))
+        new_monster = func(('Monster' + str((i + base))), randrange((hero.level), (hero.level + 2)))
         liste.append(new_monster)
     return liste
-
-def showStats(character):
-    """
-    Function to show stats and points of our hero
-    """
-    print("Tu es actuellement niveau {} avec:\n{} points de vie,\n{} en force,\n{} en vitesse.".format(character.level, character.hps, character.strength, character.speed))
 
 def upgradeStats(character):
     """
@@ -95,22 +97,22 @@ def upgradeStats(character):
     if character.sp > 0:
         choice = input("Utiliser des points (o/n): ")
         if choice.lower() == "o":
-            statToUp = input("Quelle statistique augmenter ?\n(F)orce = 1 pour 1;\n(V)ie = 1 pour 5;\n(S)Vitesse = 1 pour 2;\nVotre choix : ")
+            statToUp = input("\nQuelle statistique augmenter ?\n(F)orce = 1 pour 1;\n(V)ie = 1 pour 5;\n(S)Vitesse = 1 pour 2;\nVotre choix : ")
             if statToUp.lower() == "f":
                 character.strength += 1
                 character.sp -= 1
-                upgradeStats(character)
+                character.dmgDeal += 1
             elif statToUp.lower() == "v":
+                character.hp += 5
                 character.hps += 5
                 character.sp -= 1
-                upgradeStats(character)
             elif statToUp.lower() == "s":
                 character.speed += 1
                 character.sp -= 1
-                upgradeStats(character)
             else:
                 print("Entrée inconnue ... Veuillez saisir un choix valide.")
-                upgradeStats(character)
+            print(character)
+            upgradeStats(character)
         elif choice.lower() == "n":
             return
         else:
@@ -118,3 +120,6 @@ def upgradeStats(character):
             upgradeStats(character)
     else:
         return
+
+def showInventory():
+    return

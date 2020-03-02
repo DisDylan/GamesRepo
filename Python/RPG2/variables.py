@@ -5,9 +5,13 @@ Module content all constants variables
 """
 from classes import Weapon, Armory
 
-ITEMS = []
+XP_STAGE = (0, 100, 150, 250, 400, 700)
 
-WOOD_SWORD = Weapon('Épée en bois', 10, 4)
-IRON_SWORD = Weapon('Épée en métal', 80, 15)
-LEATH_HELMET = Armory('Casque en cuir', 20, 3)
-ITEMS.extend([WOOD_SWORD, IRON_SWORD, LEATH_HELMET])
+ITEMS = []
+FOAM_SWORD = Weapon('Épée en mousse', 20, 2)
+WOOD_SWORD = Weapon('Épée en bois', 50, 5)
+IRON_SWORD = Weapon('Épée en métal', 100, 10)
+LEATH_HELMET = Armory('Casque en cuir', 20, 1)
+ITEMS.extend([FOAM_SWORD, WOOD_SWORD, IRON_SWORD, LEATH_HELMET])
+
+MONSTER_TYPES = ["Vampire", "Orc", "Loup-Garou", "Troll", "Ogre", "Géant", "Gobelin", "Chasseur", "Chevalier", "Vagabond", "?????", "Loup", "Ours", "Tigre", "Démon"]
