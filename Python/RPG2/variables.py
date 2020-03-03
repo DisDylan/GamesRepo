@@ -7,11 +7,14 @@ from classes import Weapon, Armory
 
 XP_STAGE = (0, 100, 150, 250, 400, 700)
 
-ITEMS = []
-FOAM_SWORD = Weapon('Épée en mousse', 20, 2)
-WOOD_SWORD = Weapon('Épée en bois', 50, 5)
-IRON_SWORD = Weapon('Épée en métal', 100, 10)
-LEATH_HELMET = Armory('Casque en cuir', 20, 1)
-ITEMS.extend([FOAM_SWORD, WOOD_SWORD, IRON_SWORD, LEATH_HELMET])
-
 MONSTER_TYPES = ["Vampire", "Orc", "Loup-Garou", "Troll", "Ogre", "Géant", "Gobelin", "Chasseur", "Chevalier", "Vagabond", "?????", "Loup", "Ours", "Tigre", "Démon"]
+
+WEAPONS = []
+WEAPONS.append(Weapon('Épée en mousse', 20, 2))
+WEAPONS.append(Weapon('Épée en bois', 50, 5))
+WEAPONS.append(Weapon('Épée en fer', 100, 10))
+
+HELMETS = []
+HELMETS.append(Armory('Casque en mousse', 20, 1))
+HELMETS.append(Armory('Casque en cuir', 50, 3))
+HELMETS.append(Armory('Casque en fer', 100, 6))

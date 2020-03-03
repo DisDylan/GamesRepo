@@ -42,6 +42,7 @@ class Ennemy():
         self.xp = level * 40
         self.gold = level * 5
         self.dmgDeal = self.strength
+        self.armor = 0
 
     def __repr__(self):
         return '==========\n{}:\n----------\nNiveau: {}\n----------\nPoints de vie: {}\n----------\nDégats: {}\n=========='.format(self.name, self.level, self.hp, self.strength)
@@ -59,9 +60,10 @@ class Hero():
         self.hps = 25
         self.speed = 4
         self.xp = 0
-        self.dmgWeapon = 0
-        self.dmgDeal = self.strength + self.dmgWeapon
+        self.dmgDeal = self.strength
         self.gold = 20
+        self.armor = 0
+        self.pot = 1
 
     def __repr__(self):
         return("\n\n=:=:=:=:=:=:=:=:=:=\n{}, niveau {}:\nForce: {}\nPdV: {}/{}\nVélocité: {}\nPièces d'or: {}\n=:=:=:=:=:=:=:=:=:=\n\n".format(self.name, self.level, self.strength, self.hp, self.hps, self.speed, self.gold))
