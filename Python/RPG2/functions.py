@@ -4,7 +4,7 @@
 Module with functions for main py
 """
 from random import randrange, sample
-from variables import XP_STAGE, ITEMS, COUNT_KILLS
+from variables import ITEMS, COUNT_KILLS
 from math import floor
 
 def velocity(hero, ennemy):
@@ -33,12 +33,12 @@ def fight_order(char_fast, char_slow):
     global TURN
     global COUNT_KILLS
     if TURN == 1:
-        print("[][][][][][][][][][]\nUn ennemi apparait !!")
+        print("\nUn ennemi apparait !!\n")
         if char_fast.__class__.__name__ == "Ennemy":
             print(char_fast)
         else:
             print(char_slow)
-        next_fight = input('Appuyez sur entrée pour l\'affrontement ou entrez un lettre pour quitter\n[][][][][][][][][][]\n')
+        next_fight = input('Appuyez sur entrée pour l\'affrontement ou entrez un lettre pour quitter\n')
         if next_fight != '':
             print("\nVous avez vaincu {} ennemis pendant cette partie !".format(COUNT_KILLS))
             print('Goodbye !!')
@@ -79,7 +79,7 @@ def fight(hero, ennemy):
         hero.gold += ennemy.gold
         print("Vous gagnez {} pièces d'or.".format(ennemy.gold))
         print("Vous gagnez {} points d'experience.".format(ennemy.xp))
-        if hero.levelUp(XP_STAGE) == 1:
+        if hero.levelUp() == 1:
             upgradeStats(hero)
         return
     else:
@@ -106,7 +106,7 @@ def upgradeStats(character):
     """
     Function to verify if you have stats points, and ask to user if he want use them
     """
-    print("\n**********\n**********\nTu as {} points de caracteristiques a distribuer.".format(character.sp))
+    print("\n********************\nTu as {} points de caracteristiques a distribuer.".format(character.sp))
     if character.sp > 0:
         choice = input("Utiliser des points (o/n): ")
         if choice.lower() == "o":
@@ -138,11 +138,11 @@ def showItems(char):
     """
     Function to show rand items to user and let him buy if has needed golds
     """
-    shop = input("\n///// Le vendeur se présente à vous ! \\\\\\\\\\\nSouhaitez vous voir ce qu'il vous propose (o/n)? ")
+    shop = input("\n\033[33m///// Le vendeur se présente à vous ! \\\\\\\\\\\nSouhaitez vous voir ce qu'il vous propose (o/n)? \033[0m")
     if shop.lower() == 'o':
         selection = sample(ITEMS, k=4)
         for i in selection:
-            print("\n{}\n".format(i))
+            print("\n\033[33m{}\033[0m\n".format(i))
             buyItems(char, i)
     elif shop.lower() != ('n' or ''):
         print("Entrée inconnue, veuillez ressaisir votre choix..\n")
@@ -156,7 +156,7 @@ def buyPot(char):
     Buy a selected number of potions
     """
     potCost = 5
-    buyOne = input("\nL'alchimiste apparait, lui acheter une potion (o/n)? ")
+    buyOne = input("\n\033[91mL'alchimiste apparait, lui acheter une potion (o/n)? \033[0m")
     if buyOne.lower() == 'o':
         maxPot = floor(char.gold / potCost)
         howMany = int(input("Vous pouvez acheter {} potions, combien en voulez vous ?".format(maxPot)))
@@ -234,6 +234,7 @@ def usePot(char):
                 char.hp = char.hps
             diff = char.hp - diff
             print("(: Vous avez recuperé {} points de vie :)".format(diff))
+            print("\nPoints de vie actuels: {}/{}\n".format(char.hp, char.hps))
             usePot(char)
         elif use.lower() == 'n':
             return

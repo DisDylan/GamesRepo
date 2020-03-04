@@ -7,8 +7,6 @@ from classes import Weapon, Helmet, Plastron, Boots
 
 COUNT_KILLS = 0
 
-XP_STAGE = (0, 100, 150, 250, 400, 700)
-
 MONSTER_TYPES = ["Vampire", "Orc", "Loup-Garou", "Troll", "Ogre", "Géant", "Gobelin", "Chasseur", "Chevalier", "Vagabond", "?????", "Loup", "Ours", "Tigre", "Démon"]
 
 ITEMS = []

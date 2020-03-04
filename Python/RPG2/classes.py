@@ -62,7 +62,7 @@ class Ennemy():
     def __init__(self, name, level):
         self.name = name
         self.level = level
-        self.hp = level * 8
+        self.hp = level * 10
         self.strength = 2 * int(level * 1.10)
         self.speed = level * 2
         self.xp = level * 40
@@ -80,12 +80,14 @@ class Ennemy():
             self.speed = 0
 
     def __repr__(self):
-        return '==========\n{}:\n----------\nNiveau: {}\n----------\nPoints de vie: {}\n----------\nDégats: {}\n=========='.format(self.name, self.level, self.hp, self.strength)
+        return '\033[91m==========\n\033[31m{}\n\033[0m----------\n\033[91mNiveau: {}\n\033[0m----------\n\033[91mPoints de vie: {}\n\033[0m----------\n\033[91mDégats: {}\n\033[91m==========\033[0m'.format(self.name, self.level, self.hp, self.strength)
 
 class Hero():
     """
     Main class for the character of the user
     """
+    XP_STAGE = (0, 100, 150, 250, 400, 700, 1200, 1800, 2500, 3500)
+
     def __init__(self, name):
         self.name = name
         self.level = 1
@@ -107,15 +109,15 @@ class Hero():
         self.boots = 0
 
     def __repr__(self):
-        return("\n\n=:=:=:=:=:=:=:=:=:=\n{}, niveau {}:\nForce: {}\nPdV: {}/{}\nVélocité: {}\nPièces d'or: {}\n=:=:=:=:=:=:=:=:=:=\n\n".format(self.name, self.level, self.strength, self.hp, self.hps, self.speed, self.gold))
+        return("\n\n=:=:=:=:=:=:=:=:=:=\n\033[92m{}, niveau {}\n\033[0m--------------------\n\033[90mForce: {}\n\033[31mPdV: {}/{}\n\033[35mVélocité: {}\n\033[93mPièces d'or: {}\n\033[91mPotions: {}\n\033[94mExperience: {}/{}\n\033[0m=:=:=:=:=:=:=:=:=:=\n\n".format(self.name, self.level, self.strength, self.hp, self.hps, self.speed, self.gold, self.pot, self.xp, self.XP_STAGE[self.level]))
 
-    def levelUp(self, steps):
-        if self.xp >= steps[self.level]:
-            self.xp -= steps[self.level]
+    def levelUp(self):
+        if self.xp >= self.XP_STAGE[self.level]:
+            self.xp -= self.XP_STAGE[self.level]
             self.level += 1
             self.sp += 1
-            print("\nVous progressez d'un niveau ! Vous êtes maintenant niveau {}.\nProgression de l'xp: {}/{}".format(self.level, self.xp, steps[self.level]))
+            print("\nVous progressez d'un niveau ! Vous êtes maintenant niveau {}.\nProgression de l'xp: {}/{}".format(self.level, self.xp, self.XP_STAGE[self.level]))
             return 1
         else:
-            print("\nVotre barre d'experience a progressé : {}/{}".format(self.xp, steps[self.level]))
+            print("\nVotre barre d'experience a progressé : {}/{}".format(self.xp, self.XP_STAGE[self.level]))
             return 0
