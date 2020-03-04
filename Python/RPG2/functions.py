@@ -73,6 +73,8 @@ def fight(hero, ennemy):
         print('Vous avez vaincu !\n')
         hero.xp += ennemy.xp
         hero.gold += ennemy.gold
+        print("Vous gagnez {} pièces d'or.".format(ennemy.gold))
+        print("Vous gagnez {} points d'experience.".format(ennemy.xp))
         if hero.levelUp(XP_STAGE) == 1:
             upgradeStats(hero)
         return
@@ -99,7 +101,7 @@ def upgradeStats(character):
     """
     Function to verify if you have stats points, and ask to user if he want use them
     """
-    print("**********\nTu as {} points de caracteristiques a distribuer.".format(character.sp))
+    print("\n**********\n**********\nTu as {} points de caracteristiques a distribuer.".format(character.sp))
     if character.sp > 0:
         choice = input("Utiliser des points (o/n): ")
         if choice.lower() == "o":
@@ -131,7 +133,7 @@ def showItems(char):
     """
     Function to show rand items to user and let him buy if has needed golds
     """
-    shop = input("Le vendeur se présente à vous, souhaitez vous voir ce qu'il vous propose (o/n)? ")
+    shop = input("\n///// Le vendeur se présente à vous ! \\\\\\\\\\\nSouhaitez vous voir ce qu'il vous propose (o/n)? ")
     if shop.lower() == 'o':
         whichItem = input("Voir les (A)rmes ou les (P)rotections ? ")
         if whichItem.lower() == 'a':
@@ -161,7 +163,7 @@ def buyPot(char):
     Buy a selected number of potions
     """
     potCost = 5
-    buyOne = input("L'alchimiste apparait, lui acheter une potion (o/n)?")
+    buyOne = input("\nL'alchimiste apparait, lui acheter une potion (o/n)? ")
     if buyOne.lower() == 'o':
         maxPot = floor(char.gold / potCost)
         howMany = int(input("Vous pouvez acheter {} potions, combien en voulez vous ?".format(maxPot)))
@@ -171,7 +173,7 @@ def buyPot(char):
         else:
             char.gold -= (howMany * potCost)
             char.pot += howMany
-            print("- - - Votre achat s'est bien déroulé.\n- - - Vous avez désormais {} potions.\n- - - Il vous reste {} pièces d'or.".format(char.pot, char.gold))
+            print("- - - Votre achat s'est bien déroulé.\n- - - Vous avez désormais {} potions.\n- - - Il vous reste {} pièces d'or.\n".format(char.pot, char.gold))
     return
 
 

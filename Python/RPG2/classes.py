@@ -13,7 +13,7 @@ class Weapon():
         self.damage = damage
 
     def __repr__(self):
-        return '=====\n{}:\n-----\nPrix: {}\n-----\nDégats: {}\n====='.format(self.name, self.price, self.damage)
+        return '\n=====\n{}:\n-----\nPrix: {}\n-----\nDégats: {}\n====='.format(self.name, self.price, self.damage)
 
 
 class Armory():
@@ -26,23 +26,32 @@ class Armory():
         self.armor = armor
 
     def __repr__(self):
-        return '=====\n{}:\n-----\nPrix: {}\n-----\nArmure: {}\n====='.format(self.name, self.price, self.armor)
+        return '\n=====\n{}:\n-----\nPrix: {}\n-----\nArmure: {}\n====='.format(self.name, self.price, self.armor)
 
 
 class Ennemy():
     """
     Class to make an ennemy with some different values
     """
-    def __init__(self, name, level=1, hp=10, strength=2, speed=1):
+    def __init__(self, name, level):
         self.name = name
         self.level = level
-        self.hp = level * hp
-        self.strength = strength * int(level * 1.10)
-        self.speed = speed * (level * 2)
+        self.hp = level * 8
+        self.strength = 2 * int(level * 1.10)
+        self.speed = level * 2
         self.xp = level * 40
         self.gold = level * 5
         self.dmgWeapon = 0
         self.armor = 0
+
+        if self.level <= 0:
+            self.name = "Mannequin d'entrainement"
+            self.level = 0
+            self.gold = 10
+            self.xp = 100
+            self.strength = 0
+            self.hp = 1
+            self.speed = 0
 
     def __repr__(self):
         return '==========\n{}:\n----------\nNiveau: {}\n----------\nPoints de vie: {}\n----------\nDégats: {}\n=========='.format(self.name, self.level, self.hp, self.strength)

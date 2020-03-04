@@ -19,7 +19,7 @@ def main():
     upgradeStats(yourHero)
     
     while yourHero.hp > 0:
-        versus = Ennemy(choice(MONSTER_TYPES), randrange((yourHero.level), (yourHero.level + 2)))
+        versus = Ennemy(choice(MONSTER_TYPES), (randrange((yourHero.level - 2), (yourHero.level + 2))))
 
         fight(yourHero, versus)
         print(yourHero)
