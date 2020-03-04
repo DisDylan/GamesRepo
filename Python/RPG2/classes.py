@@ -16,7 +16,7 @@ class Weapon():
         return '\n=====\n{}:\n-----\nPrix: {}\n-----\nDégats: {}\n====='.format(self.name, self.price, self.damage)
 
 
-class Armory():
+class Helmet():
     """
     Class to make armors items with one price and armor assigned
     """
@@ -27,6 +27,32 @@ class Armory():
 
     def __repr__(self):
         return '\n=====\n{}:\n-----\nPrix: {}\n-----\nArmure: {}\n====='.format(self.name, self.price, self.armor)
+
+
+class Plastron():
+    """
+    Class to make armors items with one price and armor assigned
+    """
+    def __init__(self, name, price, armor):
+        self.name = name
+        self.price = price
+        self.armor = armor
+
+    def __repr__(self):
+        return '\n=====\n{}:\n-----\nPrix: {}\n-----\nArmure: {}\n====='.format(self.name, self.price, self.armor)
+
+
+class Boots():
+    """
+    Class to make armors items with one price and armor assigned
+    """
+    def __init__(self, name, price, speed):
+        self.name = name
+        self.price = price
+        self.speed = speed
+
+    def __repr__(self):
+        return '\n=====\n{}:\n-----\nPrix: {}\n-----\nVitesse: {}\n====='.format(self.name, self.price, self.speed)
 
 
 class Ennemy():
@@ -73,6 +99,12 @@ class Hero():
         self.gold = 20
         self.armor = 0
         self.pot = 1
+        # Attributes to calculate armor, damage and velocity
+        self.sword = 0
+        self.helmet = 0
+        self.plastron = 0
+        self.haveBoots = False
+        self.boots = 0
 
     def __repr__(self):
         return("\n\n=:=:=:=:=:=:=:=:=:=\n{}, niveau {}:\nForce: {}\nPdV: {}/{}\nVélocité: {}\nPièces d'or: {}\n=:=:=:=:=:=:=:=:=:=\n\n".format(self.name, self.level, self.strength, self.hp, self.hps, self.speed, self.gold))

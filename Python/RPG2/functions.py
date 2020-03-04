@@ -4,7 +4,7 @@
 Module with functions for main py
 """
 from random import randrange, sample
-from variables import XP_STAGE, HELMETS, WEAPONS
+from variables import XP_STAGE, ITEMS, COUNT_KILLS
 from math import floor
 
 def velocity(hero, ennemy):
@@ -31,6 +31,7 @@ def fight_order(char_fast, char_slow):
     Made to fight in order of velocity
     """
     global TURN
+    global COUNT_KILLS
     if TURN == 1:
         print("[][][][][][][][][][]\nUn ennemi apparait !!")
         if char_fast.__class__.__name__ == "Ennemy":
@@ -39,6 +40,7 @@ def fight_order(char_fast, char_slow):
             print(char_slow)
         next_fight = input('Appuyez sur entrée pour l\'affrontement ou entrez un lettre pour quitter\n[][][][][][][][][][]\n')
         if next_fight != '':
+            print("\nVous avez vaincu {} ennemis pendant cette partie !".format(COUNT_KILLS))
             print('Goodbye !!')
             return exit()
         print('::::::::::\n{} a l\'initiative:\n::::::::::'.format(char_fast.name))
@@ -62,6 +64,7 @@ def fight(hero, ennemy):
     """
     Function to make an auto fight between our hero and an ennemy met
     """
+    global COUNT_KILLS
     if velocity(hero, ennemy) == ennemy:
         fighters = fight_order(ennemy, hero)
     else:
@@ -71,6 +74,7 @@ def fight(hero, ennemy):
         return quit()
     elif fighters == ennemy:
         print('Vous avez vaincu !\n')
+        COUNT_KILLS += 1
         hero.xp += ennemy.xp
         hero.gold += ennemy.gold
         print("Vous gagnez {} pièces d'or.".format(ennemy.gold))
@@ -82,6 +86,7 @@ def fight(hero, ennemy):
         choice = input('Continuer à se battre(Touche entrée) ou quitter(Autre touche) ? ')
         print('\n')
         if choice != '':
+            print("\nVous avez vaincu {} ennemis pendant cette partie !".format(COUNT_KILLS))
             print('Goodbye brother !')
             return exit()
         fight(hero, ennemy)
@@ -135,22 +140,10 @@ def showItems(char):
     """
     shop = input("\n///// Le vendeur se présente à vous ! \\\\\\\\\\\nSouhaitez vous voir ce qu'il vous propose (o/n)? ")
     if shop.lower() == 'o':
-        whichItem = input("Voir les (A)rmes ou les (P)rotections ? ")
-        if whichItem.lower() == 'a':
-            selection = sample(WEAPONS, k=2)
-            for i in selection:
-                print(i)
-                print("\n")
-                buyItems(char, i)
-        elif whichItem.lower() == 'p':
-            selection = sample(HELMETS, k=2)
-            for i in selection:
-                print(i)
-                print("\n")
-                buyItems(char, i)
-        else:
-            print("Entrée inconnue, veuillez ressaisir votre choix..\n")
-            showItems(char)
+        selection = sample(ITEMS, k=4)
+        for i in selection:
+            print("\n{}\n".format(i))
+            buyItems(char, i)
     elif shop.lower() != ('n' or ''):
         print("Entrée inconnue, veuillez ressaisir votre choix..\n")
         showItems(char)
@@ -176,6 +169,25 @@ def buyPot(char):
             print("- - - Votre achat s'est bien déroulé.\n- - - Vous avez désormais {} potions.\n- - - Il vous reste {} pièces d'or.\n".format(char.pot, char.gold))
     return
 
+def totalArmor(char):
+    """
+    Short func to update armor of the character
+    """
+    char.armor = char.helmet + char.plastron
+    return
+
+def totalSpeed(char, item):
+    """
+    Short func to update speed of the character (depend if he have boots or not)
+    """
+    if char.haveBoots == False:
+        char.boots = item.speed
+        char.speed += char.boots
+    else:
+        char.speed -= char.boots
+        char.boots = item.speed
+        char.speed += char.boots
+    return
 
 def buyItems(char, item):
     """
@@ -188,8 +200,14 @@ def buyItems(char, item):
             char.gold -= item.price
             if item.__class__.__name__ == "Weapon":
                 char.dmgWeapon = item.damage
-            elif item.__class__.__name__ == "Armory":
-                char.armor = item.armor
+            elif item.__class__.__name__ == "Helmet":
+                char.helmet = item.armor
+                totalArmor(char)
+            elif item.__class__.__name__ == "Plastron":
+                char.plastron = item.armor
+                totalArmor(char)
+            elif item.__class__.__name__ == "Boots":
+                totalSpeed(char, item)
             print("\nVOTRE ACHAT S'EST BIEN DEROULE")
             print("Il vous reste {} en or.".format(char.gold))
             return

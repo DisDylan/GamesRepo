@@ -3,18 +3,27 @@
 """
 Module content all constants variables
 """
-from classes import Weapon, Armory
+from classes import Weapon, Helmet, Plastron, Boots
+
+COUNT_KILLS = 0
 
 XP_STAGE = (0, 100, 150, 250, 400, 700)
 
 MONSTER_TYPES = ["Vampire", "Orc", "Loup-Garou", "Troll", "Ogre", "Géant", "Gobelin", "Chasseur", "Chevalier", "Vagabond", "?????", "Loup", "Ours", "Tigre", "Démon"]
 
-WEAPONS = []
-WEAPONS.append(Weapon('Épée en mousse', 20, 2))
-WEAPONS.append(Weapon('Épée en bois', 50, 5))
-WEAPONS.append(Weapon('Épée en fer', 100, 10))
+ITEMS = []
+ITEMS.append(Weapon('Épée en mousse', 20, 2))
+ITEMS.append(Weapon('Épée en bois', 50, 5))
+ITEMS.append(Weapon('Épée en fer', 100, 10))
 
-HELMETS = []
-HELMETS.append(Armory('Casque en mousse', 20, 1))
-HELMETS.append(Armory('Casque en cuir', 50, 3))
-HELMETS.append(Armory('Casque en fer', 100, 6))
+ITEMS.append(Helmet('Casque en mousse', 20, 1))
+ITEMS.append(Helmet('Casque en cuir', 50, 3))
+ITEMS.append(Helmet('Casque en fer', 100, 6))
+
+ITEMS.append(Plastron('Tunique en tissu', 40, 1))
+ITEMS.append(Plastron('Plastron de cuir', 100, 5))
+ITEMS.append(Plastron('Armure en fer', 200, 10))
+
+ITEMS.append(Boots('Vieilles chaussettes', 30, 1))
+ITEMS.append(Boots('Chaussons (aux pommes lol)', 120, 8))
+ITEMS.append(Boots('Baskets air max', 250, 15))

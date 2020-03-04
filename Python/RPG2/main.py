@@ -4,7 +4,7 @@
 Main module to execute the game
 """
 from random import randrange, choice
-from variables import HELMETS, WEAPONS, XP_STAGE, MONSTER_TYPES
+from variables import ITEMS, XP_STAGE, MONSTER_TYPES
 from functions import fight, makeEnnemies, upgradeStats, showItems, usePot, buyPot
 from classes import Ennemy, Hero
 
