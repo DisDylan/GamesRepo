@@ -32,23 +32,28 @@ def fight_order(char_fast, char_slow):
     """
     global TURN
     if TURN == 1:
-        next_fight = input('Un ennemi apparait, appuyez sur entrée pour l\'affrontement ou entrez un lettre pour quitter: ')
+        print("[][][][][][][][][][]\nUn ennemi apparait !!")
+        if char_fast.__class__.__name__ == "Ennemy":
+            print(char_fast)
+        else:
+            print(char_slow)
+        next_fight = input('Appuyez sur entrée pour l\'affrontement ou entrez un lettre pour quitter\n[][][][][][][][][][]\n')
         if next_fight != '':
             print('Goodbye !!')
             return exit()
         print('::::::::::\n{} a l\'initiative:\n::::::::::'.format(char_fast.name))
-    char_slow.hp -= (char_fast.dmgDeal - char_slow.armor)
+    char_slow.hp -= (char_fast.strength + char_fast.dmgWeapon - char_slow.armor)
     if game_over(char_slow):
         print('\n{} a quitté notre monde\n'.format(char_slow.name))
         TURN = 1
         return char_slow
-    print('{} subi {} de dégats. Il lui reste {} points de vie.'.format(char_slow.name, (char_fast.dmgDeal - char_slow.armor), char_slow.hp))
-    char_fast.hp -= (char_slow.dmgDeal - char_fast.armor)
+    print('{} subi {} de dégats. Il lui reste {} points de vie.'.format(char_slow.name, (char_fast.strength + char_fast.dmgWeapon - char_slow.armor), char_slow.hp))
+    char_fast.hp -= (char_slow.strength + char_slow.dmgWeapon - char_fast.armor)
     if game_over(char_fast):
         print('\n\n{} a quitté notre monde\n'.format(char_fast.name))
         TURN = 1
         return char_fast
-    print('{} subi {} de dégats. Il lui reste {} points de vie.'.format(char_fast.name, (char_slow.dmgDeal - char_fast.armor), char_fast.hp))
+    print('{} subi {} de dégats. Il lui reste {} points de vie.'.format(char_fast.name, (char_slow.strength + char_slow.dmgWeapon - char_fast.armor), char_fast.hp))
     TURN += 1
     return None
 
@@ -94,27 +99,26 @@ def upgradeStats(character):
     """
     Function to verify if you have stats points, and ask to user if he want use them
     """
-    print("Tu as {} points de caracteristiques a distribuer.".format(character.sp))
+    print("**********\nTu as {} points de caracteristiques a distribuer.".format(character.sp))
     if character.sp > 0:
         choice = input("Utiliser des points (o/n): ")
         if choice.lower() == "o":
-            statToUp = input("\nQuelle statistique augmenter ?\n(F)orce = 1 pour 1;\n(V)ie = 1 pour 5;\n(S)Vitesse = 1 pour 2;\nVotre choix : ")
+            statToUp = input("\nQuelle statistique augmenter ?\n(F)orce = 1 pour 1;\n(V)ie = 1 pour 5;\n(S)Vitesse = 1 pour 3;\nVotre choix : ")
             if statToUp.lower() == "f":
                 character.strength += 1
                 character.sp -= 1
-                character.dmgDeal += 1
             elif statToUp.lower() == "v":
                 character.hp += 5
                 character.hps += 5
                 character.sp -= 1
             elif statToUp.lower() == "s":
-                character.speed += 1
+                character.speed += 3
                 character.sp -= 1
             else:
                 print("Entrée inconnue ... Veuillez saisir un choix valide.")
             print(character)
             upgradeStats(character)
-        elif choice.lower() == "n":
+        elif choice.lower() == ("n" or ''):
             return
         else:
             print("Entrée inconnue ... Veuillez saisir un choix valide.")
@@ -145,7 +149,7 @@ def showItems(char):
         else:
             print("Entrée inconnue, veuillez ressaisir votre choix..\n")
             showItems(char)
-    elif shop.lower() != 'n':
+    elif shop.lower() != ('n' or ''):
         print("Entrée inconnue, veuillez ressaisir votre choix..\n")
         showItems(char)
     else:
@@ -160,7 +164,7 @@ def buyPot(char):
     buyOne = input("L'alchimiste apparait, lui acheter une potion (o/n)?")
     if buyOne.lower() == 'o':
         maxPot = floor(char.gold / potCost)
-        howMany = input("Vous pouvez acheter {} potions, combien en voulez vous ?".format(maxPot))
+        howMany = int(input("Vous pouvez acheter {} potions, combien en voulez vous ?".format(maxPot)))
         if howMany > maxPot:
             print("\n!!! La maison ne fait pas crédit !!!\n")
             buyPot(char)
@@ -181,13 +185,13 @@ def buyItems(char, item):
         if buying.lower() == 'o':
             char.gold -= item.price
             if item.__class__.__name__ == "Weapon":
-                char.dmgDeal += item.damage
+                char.dmgWeapon = item.damage
             elif item.__class__.__name__ == "Armory":
-                char.armor += item.armor
+                char.armor = item.armor
             print("\nVOTRE ACHAT S'EST BIEN DEROULE")
             print("Il vous reste {} en or.".format(char.gold))
             return
-        elif buying.lower == 'n':
+        elif buying.lower() == 'n':
             return
         else:
             print("Erreur, recommencez.")

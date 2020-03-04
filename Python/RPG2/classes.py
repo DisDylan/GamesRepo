@@ -41,7 +41,7 @@ class Ennemy():
         self.speed = speed * (level * 2)
         self.xp = level * 40
         self.gold = level * 5
-        self.dmgDeal = self.strength
+        self.dmgWeapon = 0
         self.armor = 0
 
     def __repr__(self):
@@ -54,13 +54,13 @@ class Hero():
     def __init__(self, name):
         self.name = name
         self.level = 1
-        self.sp = 3
+        self.sp = 5
         self.strength = 3 # 3
         self.hp = 25 # 25
         self.hps = 25
         self.speed = 4
         self.xp = 0
-        self.dmgDeal = self.strength
+        self.dmgWeapon = 0
         self.gold = 20
         self.armor = 0
         self.pot = 1
@@ -78,6 +78,3 @@ class Hero():
         else:
             print("\nVotre barre d'experience a progressé : {}/{}".format(self.xp, steps[self.level]))
             return 0
-        
-    def buy(self, weapon):
-        self.strength = weapon.damage

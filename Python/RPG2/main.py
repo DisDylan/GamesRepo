@@ -20,12 +20,10 @@ def main():
     
     while yourHero.hp > 0:
         versus = Ennemy(choice(MONSTER_TYPES), randrange((yourHero.level), (yourHero.level + 2)))
-        print(versus)
-
-        usePot(yourHero)
 
         fight(yourHero, versus)
         print(yourHero)
+        usePot(yourHero)
 
         buyPot(yourHero)
         showItems(yourHero)
