@@ -6,6 +6,8 @@ Module with functions for main py
 from random import randrange, sample
 from variables import ITEMS, COUNT_KILLS
 from math import floor
+import pygame
+import time
 
 def velocity(hero, ennemy):
     """
@@ -169,12 +171,14 @@ def buyPot(char):
             print("- - - Votre achat s'est bien déroulé.\n- - - Vous avez désormais {} potions.\n- - - Il vous reste {} pièces d'or.\n".format(char.pot, char.gold))
     return
 
+
 def totalArmor(char):
     """
     Short func to update armor of the character
     """
     char.armor = char.helmet + char.plastron
     return
+
 
 def totalSpeed(char, item):
     """
@@ -188,6 +192,7 @@ def totalSpeed(char, item):
         char.boots = item.speed
         char.speed += char.boots
     return
+
 
 def buyItems(char, item):
     """
