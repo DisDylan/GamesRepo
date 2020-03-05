@@ -35,6 +35,8 @@ def fight_order(char_fast, char_slow):
     """
     global TURN
     global COUNT_KILLS
+    hpBar(char_slow)
+    hpBar(char_fast)
     if TURN == 1:
         if char_fast.__class__.__name__ == "Ennemy":
             print(char_fast)
@@ -57,6 +59,8 @@ def fight_order(char_fast, char_slow):
         return char_fast
     print('{} subi {} de dégats. Il lui reste {} points de vie.'.format(char_fast.name, (char_slow.strength + char_slow.dmgWeapon - char_fast.armor), char_fast.hp))
     TURN += 1
+    hpBar(char_slow)
+    hpBar(char_fast)
     return None
 
 
@@ -88,6 +92,7 @@ def fight(hero, ennemy):
             upgradeStats(hero)
         return
     else:
+        hpBar(hero)
         choice = input('Continuer à se battre(Touche entrée) ou quitter(Autre touche) ? ')
         print('\n')
         if choice != '':
@@ -253,3 +258,21 @@ def usePot(char):
     else:
         print("Pas de potion, navré pour vous ..")
     return
+
+
+def hpBar(char):
+    """
+    Show hp bar of characters
+    """
+    percentHp = (char.hp / char.hps) * 100
+    if percentHp > 60:
+        hpText = font.render("\n     {} / {} HP     \n".format(char.hp, char.hps), True, GREEN_COLOR, CIEL_COLOR)
+    elif percentHp > 30:
+        hpText = font.render("\n     {} / {} HP     \n".format(char.hp, char.hps), True, YELLOW_COLOR, CIEL_COLOR)
+    else:
+        hpText = font.render("\n     {} / {} HP     \n".format(char.hp, char.hps), True, RED_COLOR, CIEL_COLOR)
+    if char.__class__.__name__ == "Ennemy":
+        surface.blit(hpText, (370, 80))
+    else:
+        surface.blit(hpText, (70, 80))
+    pygame.display.update()

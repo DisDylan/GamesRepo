@@ -37,7 +37,7 @@ def makeMap(listR, listE):
                 surface.blit(WALL_PIC, wall)
             else:
                 surface.blit(WAY_PIC, (i, j))
-            if randrange(0, 100) < 40:
+            if randrange(0, 100) < 15:
                 versus = Ennemy(choice(MONSTER_TYPES), (randrange((yourchamp.level - 2), (yourchamp.level + 2))))
                 versusList.append(versus)
                 addEnnemy = pygame.Rect(i, j, 95, 95)
@@ -142,7 +142,8 @@ surface.blit(HERO, hero_rect)
 ingame = 1
 while ingame != 0:
     if heroMove(HERO, hero_rect, walls, ennemiesMap):
-        fight(yourchamp, choice(versusList))
+        fight(yourchamp, versusList[0])
+        del versusList[0]
         resetMap(ennemiesMap)
         makeMap(walls, ennemiesMap)
         surface.blit(HERO, hero_rect)

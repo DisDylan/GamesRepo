@@ -63,6 +63,7 @@ class Ennemy():
         self.name = name
         self.level = level
         self.hp = level * 10
+        self.hps = level * 10
         self.strength = 2 * int(level * 1.10)
         self.speed = level * 2
         self.xp = level * 40
@@ -77,6 +78,7 @@ class Ennemy():
             self.xp = 100
             self.strength = 0
             self.hp = 1
+            self.hps = 1
             self.speed = 0
 
     def __repr__(self):

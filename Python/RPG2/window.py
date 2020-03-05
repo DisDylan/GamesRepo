@@ -41,3 +41,10 @@ walls = []
 HERO = pygame.image.load('sprites/heroes/characterF.png')
 hero_rect = pygame.Rect(200, 200, 100, 100)
 
+RED_COLOR = (150, 0, 0)
+YELLOW_COLOR = (150, 150, 0)
+GREEN_COLOR = (0, 150, 0)
+
+CIEL_COLOR = (152, 199, 244)
+
+font = pygame.font.SysFont("comicsansms", 30)
