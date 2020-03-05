@@ -6,6 +6,7 @@ Module with functions for main py
 from random import randrange, sample
 from variables import ITEMS, COUNT_KILLS
 from math import floor
+from window import *
 import pygame
 import time
 
@@ -35,15 +36,12 @@ def fight_order(char_fast, char_slow):
     global TURN
     global COUNT_KILLS
     if TURN == 1:
-        print("\nUn ennemi apparait !!\n")
         if char_fast.__class__.__name__ == "Ennemy":
             print(char_fast)
         else:
             print(char_slow)
         next_fight = input('Appuyez sur entrée pour l\'affrontement ou entrez un lettre pour quitter\n')
         if next_fight != '':
-            print("\nVous avez vaincu {} ennemis pendant cette partie !".format(COUNT_KILLS))
-            print('Goodbye !!')
             return exit()
         print('::::::::::\n{} a l\'initiative:\n::::::::::'.format(char_fast.name))
     char_slow.hp -= (char_fast.strength + char_fast.dmgWeapon - char_slow.armor)
@@ -66,6 +64,10 @@ def fight(hero, ennemy):
     """
     Function to make an auto fight between our hero and an ennemy met
     """
+    surface.blit(FIGHT_BG, (0, 0))
+    surface.blit(ENNEMY_PIC, (400, 450))
+    surface.blit(HERO, (100, 450))
+    pygame.display.update()
     global COUNT_KILLS
     if velocity(hero, ennemy) == ennemy:
         fighters = fight_order(ennemy, hero)
@@ -81,6 +83,7 @@ def fight(hero, ennemy):
         hero.gold += ennemy.gold
         print("Vous gagnez {} pièces d'or.".format(ennemy.gold))
         print("Vous gagnez {} points d'experience.".format(ennemy.xp))
+        del ennemy
         if hero.levelUp() == 1:
             upgradeStats(hero)
         return
@@ -215,6 +218,7 @@ def buyItems(char, item):
                 totalSpeed(char, item)
             print("\nVOTRE ACHAT S'EST BIEN DEROULE")
             print("Il vous reste {} en or.".format(char.gold))
+            del item
             return
         elif buying.lower() == 'n':
             return
