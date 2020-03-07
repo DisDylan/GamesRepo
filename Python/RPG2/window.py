@@ -1,7 +1,7 @@
 #! usr/bin/env python3
 #coding: utf-8
 """
-Main module for creating window with pygame and register events
+Main module for creating window with pygame and variables used for
 """
 import pygame
 import time
@@ -48,3 +48,6 @@ GREEN_COLOR = (0, 150, 0)
 CIEL_COLOR = (152, 199, 244)
 
 font = pygame.font.SysFont("comicsansms", 30)
+
+versusList = []
+ennemiesMap = []

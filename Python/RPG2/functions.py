@@ -4,7 +4,8 @@
 Module with functions for main py
 """
 from random import randrange, sample
-from variables import ITEMS, COUNT_KILLS
+from variables import ITEMS, COUNT_KILLS, MONSTER_TYPES
+from classes import Hero, Ennemy
 from math import floor
 from window import *
 import pygame
@@ -42,9 +43,7 @@ def fight_order(char_fast, char_slow):
             print(char_fast)
         else:
             print(char_slow)
-        next_fight = input('Appuyez sur entrée pour l\'affrontement ou entrez un lettre pour quitter\n')
-        if next_fight != '':
-            return exit()
+        getEnter()
         print('::::::::::\n{} a l\'initiative:\n::::::::::'.format(char_fast.name))
     char_slow.hp -= (char_fast.strength + char_fast.dmgWeapon - char_slow.armor)
     if game_over(char_slow):
@@ -93,13 +92,9 @@ def fight(hero, ennemy):
         return
     else:
         hpBar(hero)
-        choice = input('Continuer à se battre(Touche entrée) ou quitter(Autre touche) ? ')
-        print('\n')
-        if choice != '':
-            print("\nVous avez vaincu {} ennemis pendant cette partie !".format(COUNT_KILLS))
-            print('Goodbye brother !')
-            return exit()
+        getEnter()
         fight(hero, ennemy)
+                        
 
 
 def makeEnnemies(func, base, number, liste, hero):
@@ -276,3 +271,205 @@ def hpBar(char):
     else:
         surface.blit(hpText, (70, 80))
     pygame.display.update()
+
+def getName(char):
+    """
+    Made to get the name with touch pressed
+    """
+    surface.blit(FIGHT_BG, (0,0))
+    text = font.render("Votre nom ?", True, GREEN_COLOR)
+    surface.blit(text, (250, 250))
+    pygame.display.update()
+    continuer = 1
+    while continuer == 1:
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN:
+                if event.key == K_a:
+                    char.name += 'a'
+                elif event.key == K_b:
+                    char.name += 'b'
+                elif event.key == K_c:
+                    char.name += 'c'
+                elif event.key == K_d:
+                    char.name += 'd'
+                elif event.key == K_e:
+                    char.name += 'e'
+                elif event.key == K_f:
+                    char.name += 'f'
+                elif event.key == K_g:
+                    char.name += 'g'
+                elif event.key == K_h:
+                    char.name += 'h'
+                elif event.key == K_i:
+                    char.name += 'i'
+                elif event.key == K_j:
+                    char.name += 'j'
+                elif event.key == K_k:
+                    char.name += 'k'
+                elif event.key == K_l:
+                    char.name += 'l'
+                elif event.key == K_m:
+                    char.name += 'm'
+                elif event.key == K_n:
+                    char.name += 'n'
+                elif event.key == K_o:
+                    char.name += 'o'
+                elif event.key == K_p:
+                    char.name += 'p'
+                elif event.key == K_q:
+                    char.name += 'q'
+                elif event.key == K_r:
+                    char.name += 'r'
+                elif event.key == K_s:
+                    char.name += 's'
+                elif event.key == K_t:
+                    char.name += 't'
+                elif event.key == K_u:
+                    char.name += 'u'
+                elif event.key == K_v:
+                    char.name += 'v'
+                elif event.key == K_w:
+                    char.name += 'w'
+                elif event.key == K_x:
+                    char.name += 'x'
+                elif event.key == K_y:
+                    char.name += 'y'
+                elif event.key == K_z:
+                    char.name += 'z'
+                elif event.key == K_RETURN:
+                    char.name = char.name.capitalize()
+                    continuer = 0
+
+def collision(hero, listRect):
+    for i in listRect:
+        if hero.colliderect(i):
+            return i
+    return 0
+
+
+def resetMap(listEnnemies):
+    for i in listEnnemies:
+        i.x = -1000
+        i.y = -1000
+
+
+def makeMap(yourchamp, listR, listE):
+    for i in X_POS:
+        for j in Y_POS:
+            if (i==0 and j==0) or (i==100 and j==0) or (i==0 and j==100) or (i==0 and j==400) or (i==0 and j==500) or (i==100 and j==500) or (i==400 and j==0) or (i==500 and j==0) or (i==500 and j==100) or (i==500 and j==400) or (i==400 and j==500) or (i==500 and j==500):
+                wall = pygame.Rect(i, j, 95, 95)
+                listR.append(wall)
+                surface.blit(WALL_PIC, wall)
+            else:
+                surface.blit(WAY_PIC, (i, j))
+            if randrange(0, 100) < 15:
+                versus = Ennemy(choice(MONSTER_TYPES), (randrange((yourchamp.level - 1), (yourchamp.level + 3))))
+                versusList.append(versus)
+                addEnnemy = pygame.Rect(i, j, 95, 95)
+                listE.append(addEnnemy)
+                surface.blit(ENNEMY_PIC, addEnnemy)
+    pygame.display.update()
+
+
+
+
+def heroMove(champ, char, hero_rect, listWall, listEnnemy):
+    fight = False
+    for event in pygame.event.get():
+
+        if event.type == pygame.KEYDOWN:
+
+            if event.key == pygame.K_LEFT:
+                hero_rect.move_ip(-100, 0)
+                collide_w = collision(hero_rect, listWall)
+                collide_e = collision(hero_rect, listEnnemy)
+                if collide_w != 0:
+                    hero_rect.move_ip(100, 0)
+                elif collide_e != 0:
+                    print("fight ici")
+                    fight = True
+                    collide_e.x = -1000
+                    collide_e.y = -1000
+                surface.blit(WAY_PIC,((hero_rect.x + 100), hero_rect.y))
+                surface.blit(char, hero_rect)
+
+            elif event.key == pygame.K_RIGHT:
+                hero_rect.move_ip(100, 0)
+                collide_e = collision(hero_rect, listEnnemy)
+                collide_w = collision(hero_rect, listWall)
+                if collide_w != 0:
+                    hero_rect.move_ip(-100, 0)
+                elif collide_e != 0:
+                    print("fight ici")
+                    fight = True
+                    collide_e.x = -1000
+                    collide_e.y = -1000
+                surface.blit(WAY_PIC,((hero_rect.x - 100), hero_rect.y))
+                surface.blit(char, hero_rect)
+
+            elif event.key == pygame.K_DOWN:
+                hero_rect.move_ip(0, 100)
+                collide_w = collision(hero_rect, listWall)
+                collide_e = collision(hero_rect, listEnnemy)
+                if collide_w != 0:
+                    hero_rect.move_ip(0, -100)
+                elif collide_e != 0:
+                    print("fight ici")
+                    fight = True
+                    collide_e.x = -1000
+                    collide_e.y = -1000
+                surface.blit(WAY_PIC,(hero_rect.x, (hero_rect.y - 100)))
+                surface.blit(char, hero_rect)
+
+            elif event.key == pygame.K_UP:
+                hero_rect.move_ip(0, -100)
+                collide_e = collision(hero_rect, listEnnemy)
+                collide_w = collision(hero_rect, listWall)
+                if collide_w != 0:
+                    hero_rect.move_ip(0, 100)
+                elif collide_e != 0:
+                    print("fight ici")
+                    fight = True
+                    collide_e.x = -1000
+                    collide_e.y = -1000
+                surface.blit(WAY_PIC,(hero_rect.x, (hero_rect.y + 100)))
+                surface.blit(char, hero_rect)
+
+    if hero_rect.x < 0:
+        hero_rect.x = 500
+        resetMap(listEnnemy)
+        makeMap(champ, listWall, listEnnemy)
+        surface.blit(char, hero_rect)
+
+    elif hero_rect.x > 500:
+        hero_rect.x = 0
+        resetMap(listEnnemy)
+        makeMap(champ, listWall, listEnnemy)
+        surface.blit(char, hero_rect)
+
+    elif hero_rect.y < 0:
+        hero_rect.y = 500
+        resetMap(listEnnemy)
+        makeMap(champ, listWall, listEnnemy)
+        surface.blit(char, hero_rect)
+
+    elif hero_rect.y > 500:
+        hero_rect.y = 0
+        resetMap(listEnnemy)
+        makeMap(champ, listWall, listEnnemy)
+        surface.blit(char, hero_rect)
+        
+    pygame.display.update()
+    return fight
+
+
+def getEnter():
+    continuer = 1
+    while continuer == 1:
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN:
+                if event.key == K_RETURN:
+                    continuer = 0
+                else:
+                    continue
+    return
