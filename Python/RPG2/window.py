@@ -31,6 +31,7 @@ WAY_PIC = pygame.image.load('sprites/map/sol.png')
 
 FIGHT_BG = pygame.image.load('sprites/map/backgroundFight.png')
 MENU_BG = pygame.image.load('sprites/map/bgMenu.png')
+POT_BG = pygame.image.load('sprites/map/bgPot.png')
 
 ENNEMY_PIC = pygame.image.load('sprites/chars/wolf.png')
 
@@ -39,7 +40,7 @@ Y_POS = [0, 100, 200, 300, 400, 500]
 
 walls = []
 
-HERO = pygame.image.load('sprites/heroes/characterF.png')
+HERO = pygame.image.load('sprites/heroes/character.png')
 hero_rect = pygame.Rect(200, 200, 100, 100)
 
 RED_COLOR = (150, 0, 0)

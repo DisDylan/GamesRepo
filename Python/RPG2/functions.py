@@ -90,6 +90,7 @@ def fight(hero, ennemy):
         if hero.levelUp() == 1:
             refreshMenu(hero)
             upgradeStats(hero)
+            print("Up niveau {}".format(hero.level))
         return
     else:
         hpBar(hero)
@@ -108,6 +109,9 @@ def makeEnnemies(func, base, number, liste, hero):
     return liste
 
 def refreshMenu(character):
+    """
+    Main func to refresh menu with stats of user
+    """
     spDisturb = font.render("Vous avez {} points a distribuer".format(character.sp), True, (250, 250, 0))
     strength = fontStat.render("Point de (F)orce : {} (+1)".format(character.strength), True, (255, 255, 255))
     life = fontStat.render("Points de (V)ie : {}/{} (+5)".format(character.hp, character.hps), True, (255, 255, 255))
@@ -121,7 +125,7 @@ def refreshMenu(character):
 
 def upgradeStats(character):
     """
-    Function to verify if you have stats points, and ask to user if he want use them
+    Function to verify if you have stats points, and allow user to use them on a menu screen
     """
     refreshMenu(character)
     continuer = 1
@@ -169,8 +173,13 @@ def buyPot(char):
     """
     Buy a selected number of potions
     """
+    continuer = 1
     potCost = 5
-    buyOne = input("\n\033[91mL'alchimiste apparait, lui acheter une potion (o/n)? \033[0m")
+    while continuer == 1:
+        for event in pygame.event.get():
+            if event.type == KEYDOWN:
+                if event.key == K_o:
+                    continuer = 0
     if buyOne.lower() == 'o':
         maxPot = floor(char.gold / potCost)
         howMany = int(input("Vous pouvez acheter {} potions, combien en voulez vous ?".format(maxPot)))
@@ -238,29 +247,33 @@ def buyItems(char, item):
     return
 
 
+def updatePot(char):
+    surface.blit(POT_BG, (0, 0))
+    text = font.render("Vous avez {} potions. PdV actuels: {}/{}".format(char.pot, char.hp, char.hps), True, RED_COLOR)
+    surface.blit(text, (10, 550))
+    pygame.display.update()
+
+
 def usePot(char):
     """
     Allow user to recover HP before fighting
     """
+    updatePot(char)
     if char.pot > 0:
-        use = input("-!-!-!-!-!-!-!-!-!-\nUtiliser une potion (o/n)")
-        if use.lower() == 'o':
-            diff = char.hp
-            char.pot -= 1
-            char.hp += 20
-            if char.hp > char.hps:
-                char.hp = char.hps
-            diff = char.hp - diff
-            print("(: Vous avez recuperé {} points de vie :)".format(diff))
-            print("\nPoints de vie actuels: {}/{}\n".format(char.hp, char.hps))
-            usePot(char)
-        elif use.lower() == 'n':
-            return
-        else:
-            print("Lettre 'o' ou lettre 'n' vindiou !!")
-            usePot(char)
-    else:
-        print("Pas de potion, navré pour vous ..")
+        continuer = 1
+        while continuer == 1:
+            for event in pygame.event.get():
+                if event.type == KEYDOWN:
+                    if event.key == K_o:
+                        char.pot -= 1
+                        char.hp += 20
+                        if char.hp > char.hps:
+                            char.hp = char.hps
+                        updatePot(char)
+                        continuer = 0
+                    elif event.key == K_n:
+                        return
+        usePot(char)
     return
 
 
@@ -350,6 +363,9 @@ def getName(char):
                     continuer = 0
 
 def collision(hero, listRect):
+    """
+    Return a rect if hero collide one
+    """
     for i in listRect:
         if hero.colliderect(i):
             return i
@@ -357,12 +373,20 @@ def collision(hero, listRect):
 
 
 def resetMap(listEnnemies):
+    """
+    Put out of the screen all rect in list
+    """
     for i in listEnnemies:
         i.x = -1000
         i.y = -1000
 
 
 def makeMap(yourchamp, listR, listE):
+    """
+    Build map with walls and ennemies, pictures and rects
+    """
+    for i in versusList:
+        del i
     for i in X_POS:
         for j in Y_POS:
             if (i==0 and j==0) or (i==100 and j==0) or (i==0 and j==100) or (i==0 and j==400) or (i==0 and j==500) or (i==100 and j==500) or (i==400 and j==0) or (i==500 and j==0) or (i==500 and j==100) or (i==500 and j==400) or (i==400 and j==500) or (i==500 and j==500):
@@ -372,8 +396,7 @@ def makeMap(yourchamp, listR, listE):
             else:
                 surface.blit(WAY_PIC, (i, j))
             if randrange(0, 100) < 15:
-                versus = Ennemy(choice(MONSTER_TYPES), (randrange((yourchamp.level - 2), (yourchamp.level + 2))))
-                versusList.append(versus)
+                versusList.append(Ennemy(choice(MONSTER_TYPES), (randrange((yourchamp.level - 1), (yourchamp.level + 2)))))
                 addEnnemy = pygame.Rect(i, j, 95, 95)
                 listE.append(addEnnemy)
                 surface.blit(ENNEMY_PIC, addEnnemy)
@@ -383,6 +406,9 @@ def makeMap(yourchamp, listR, listE):
 
 
 def heroMove(champ, char, hero_rect, listWall, listEnnemy):
+    """
+    Main func to move our hero, change map, collide walls and collide ennemies to fight
+    """
     fight = False
     for event in pygame.event.get():
 
@@ -473,6 +499,9 @@ def heroMove(champ, char, hero_rect, listWall, listEnnemy):
 
 
 def getEnter():
+    """
+    Lock screen while user dont press return
+    """
     continuer = 1
     while continuer == 1:
         for event in pygame.event.get():

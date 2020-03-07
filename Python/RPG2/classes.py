@@ -95,14 +95,14 @@ class Hero():
         self.level = 1
         self.sp = 5
         self.strength = 3 # 3
-        self.hp = 25 # 25
-        self.hps = 25
+        self.hp = 25
+        self.hps = 25 # 25
         self.speed = 4
         self.xp = 0
         self.dmgWeapon = 0
         self.gold = 20
         self.armor = 0
-        self.pot = 1
+        self.pot = 3
         # Attributes to calculate armor, damage and velocity
         self.sword = 0
         self.helmet = 0

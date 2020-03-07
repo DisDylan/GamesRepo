@@ -14,7 +14,7 @@ from pygame.locals import *
 
 def main():
     """
-    Main function to test
+    Main function to play
     """
     yourChamp = Hero("")
     getName(yourChamp)
@@ -28,6 +28,7 @@ def main():
         if heroMove(yourChamp, HERO, hero_rect, walls, ennemiesMap):
             fight(yourChamp, versusList[0])
             del versusList[0]
+            usePot(yourChamp)
             resetMap(ennemiesMap)
             makeMap(yourChamp, walls, ennemiesMap)
             surface.blit(HERO, hero_rect)
