@@ -19,6 +19,7 @@ def main():
     yourChamp = Hero("")
     getName(yourChamp)
     print(yourChamp.name)
+    upgradeStats(yourChamp)
     makeMap(yourChamp, walls, ennemiesMap)
     surface.blit(HERO, hero_rect)
 

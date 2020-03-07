@@ -30,6 +30,7 @@ WALL_PIC = pygame.image.load('sprites/map/wall.png')
 WAY_PIC = pygame.image.load('sprites/map/sol.png')
 
 FIGHT_BG = pygame.image.load('sprites/map/backgroundFight.png')
+MENU_BG = pygame.image.load('sprites/map/bgMenu.png')
 
 ENNEMY_PIC = pygame.image.load('sprites/chars/wolf.png')
 
@@ -48,6 +49,7 @@ GREEN_COLOR = (0, 150, 0)
 CIEL_COLOR = (152, 199, 244)
 
 font = pygame.font.SysFont("comicsansms", 30)
+fontStat = pygame.font.SysFont("comicsansms", 60)
 
 versusList = []
 ennemiesMap = []

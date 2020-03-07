@@ -88,6 +88,7 @@ def fight(hero, ennemy):
         print("Vous gagnez {} points d'experience.".format(ennemy.xp))
         del ennemy
         if hero.levelUp() == 1:
+            refreshMenu(hero)
             upgradeStats(hero)
         return
     else:
@@ -106,35 +107,43 @@ def makeEnnemies(func, base, number, liste, hero):
         liste.append(new_monster)
     return liste
 
+def refreshMenu(character):
+    spDisturb = font.render("Vous avez {} points a distribuer".format(character.sp), True, (250, 250, 0))
+    strength = fontStat.render("Point de (F)orce : {} (+1)".format(character.strength), True, (255, 255, 255))
+    life = fontStat.render("Points de (V)ie : {}/{} (+5)".format(character.hp, character.hps), True, (255, 255, 255))
+    speed = fontStat.render("(S)Vitesse : {} (+3)".format(character.speed), True, (255, 255, 255))
+    surface.blit(MENU_BG, (0, 0))
+    surface.blit(spDisturb, (100, 100))
+    surface.blit(strength, (50, 250))
+    surface.blit(life, (50, 350))
+    surface.blit(speed, (50, 450))
+    pygame.display.update()
 
 def upgradeStats(character):
     """
     Function to verify if you have stats points, and ask to user if he want use them
     """
-    print("\n********************\nTu as {} points de caracteristiques a distribuer.".format(character.sp))
+    refreshMenu(character)
+    continuer = 1
     if character.sp > 0:
-        choice = input("Utiliser des points (o/n): ")
-        if choice.lower() == "o":
-            statToUp = input("\nQuelle statistique augmenter ?\n(F)orce = 1 pour 1;\n(V)ie = 1 pour 5;\n(S)Vitesse = 1 pour 3;\nVotre choix : ")
-            if statToUp.lower() == "f":
-                character.strength += 1
-                character.sp -= 1
-            elif statToUp.lower() == "v":
-                character.hp += 5
-                character.hps += 5
-                character.sp -= 1
-            elif statToUp.lower() == "s":
-                character.speed += 3
-                character.sp -= 1
-            else:
-                print("Entrée inconnue ... Veuillez saisir un choix valide.")
-            print(character)
-            upgradeStats(character)
-        elif choice.lower() == ("n" or ''):
-            return
-        else:
-            print("Entrée inconnue ... Veuillez saisir un choix valide.")
-            upgradeStats(character)
+        while continuer == 1:
+            for event in pygame.event.get():
+                if event.type == KEYDOWN:
+                    if event.key == K_f:
+                        character.strength += 1
+                        character.sp -= 1
+                        continuer = 0
+                    elif event.key == K_v:
+                        character.hp += 5
+                        character.hps += 5
+                        character.sp -= 1
+                        continuer = 0
+                    elif event.key == K_s:
+                        character.speed += 3
+                        character.sp -= 1
+                        continuer = 0
+        print(character)
+        upgradeStats(character)
     else:
         return
 
@@ -363,7 +372,7 @@ def makeMap(yourchamp, listR, listE):
             else:
                 surface.blit(WAY_PIC, (i, j))
             if randrange(0, 100) < 15:
-                versus = Ennemy(choice(MONSTER_TYPES), (randrange((yourchamp.level - 1), (yourchamp.level + 3))))
+                versus = Ennemy(choice(MONSTER_TYPES), (randrange((yourchamp.level - 2), (yourchamp.level + 2))))
                 versusList.append(versus)
                 addEnnemy = pygame.Rect(i, j, 95, 95)
                 listE.append(addEnnemy)
