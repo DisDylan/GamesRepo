@@ -1,9 +1,18 @@
 from random import *
+import time
 import pygame
+from pygame.locals import *
+
+BLOC = pygame.image.load('wall.png')
+
 
 # CREATION PAR LE JOUEUR D'UNE GRILLE
 x = int(input('Hauteur'))
 y = int(input('Largeur'))
+
+surface = pygame.display.set_mode((x*30, y*30)) # Define window size
+pygame.display.set_caption('Demineur') # Window's name
+horloge = pygame.time.Clock()
 f = open('terrain.txt', 'a+')
 for i in range(x):
 	for a in range(y):
@@ -73,3 +82,33 @@ for i in range(hauteur):
 		position = (i, j)
 		new_case.append(position)
 print(new_case)
+
+
+y_pos = 0
+recList = []
+for i in range(largeur):
+	x_pos = 0
+	for j in range(hauteur):
+		surface.blit(BLOC, (x_pos, y_pos))
+		rec = pygame.Rect(30, 30, x_pos, y_pos)
+		recList.append(rec)
+		x_pos += 30
+	y_pos += 30
+pygame.display.update()
+print("x={}, y={}, x_pos={}, y_pos={}".format(x, y, x_pos, y_pos))
+
+continuer = True
+while continuer == True:
+	print("exe en cours")
+"""
+for i in range(len(recList)):
+	for j in range(len(i))
+		if recList.collide == True:
+			if case[i][j] == 'X':
+				quit()
+			else:
+				value = case[i][j]
+				text = text.render(value, True, (0, 0, 0))
+				surface.blit(text, (i*size, j*size))
+				pygame.display.update()
+				"""
