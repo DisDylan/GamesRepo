@@ -15,12 +15,14 @@ y = int(input('Largeur'))
 surface = pygame.display.set_mode((x*30, y*30)) # Define window size
 pygame.display.set_caption('Demineur') # Window's name
 horloge = pygame.time.Clock()
+
 f = open('terrain.txt', 'a+')
 for i in range(x):
 	for a in range(y):
 		f.write('0')
 	f.write('\n')
 f.close()
+
 dem = open('terrain.txt', 'r')
 new_game = dem.readlines()
 largeur = len(new_game[0])-1
@@ -87,36 +89,67 @@ print(new_case)
 
 
 y_pos = 0
-recList = [[0 for col in range(largeur)] for row in range(hauteur)]
 for i in range(largeur):
 	x_pos = 0
 	for j in range(hauteur):
 		surface.blit(BLOC, (x_pos, y_pos))
-		rec = pygame.Rect(30, 30, x_pos, y_pos)
-		recList[i][j] = rec
 		x_pos += 30
 	y_pos += 30
 pygame.display.update()
 print("x={}, y={}, x_pos={}, y_pos={}".format(x, y, x_pos, y_pos))
 
 font = pygame.font.SysFont("comicsansms", 30)
-
+"""
+def showNear(x, y):
+	gotNone = 0
+		if (x > 0) and (y > 0):
+			if case[x-1][y-1] == 0:
+				gotNone += 1
+		if y > 0:
+			if case[x][y-1] == 0:
+				gotNone += 1
+		if (x < (hauteur-1)) and (y > 0):
+			if case[x+1][y-1] == 0:
+				gotNone += 1
+		if x < (hauteur-1):
+			if case[x+1][y] == 0:
+				gotNone += 1
+		if (x < (hauteur-1)) and (y < (largeur-1)):
+			if case[x+1][y+1] == 0:
+				gotNone += 1
+		if y < (largeur-1):
+			if case[x][y+1] == 0:
+				gotNone += 1
+		if (y < (largeur-1)) and (x > 0):
+			if case[x-1][y+1] == 0:
+				gotNone += 1
+		if x > 0:
+			if case[x-1][y] == 0:
+				gotNone += 1
+		if gotNone != 0:
+			sh
+"""
 continuer = True
 while continuer == True:
 	for event in pygame.event.get():
-		if event.type == pygame.mouse.get_pressed():
-			yPos = 0
+		if event.type == MOUSEBUTTONDOWN:
 			pos = pygame.mouse.get_pos()
-			for i in recList:
-				xPos = 0
-				for j in i:
-					if pos.colliderect(j):
-						if case[xPos][yPos] == 'X':
-							quit()
-						else:
-							text = font.render("".format(str(case[xPos][yPos])), True, (200, 0, 0))
-							surface.blit(text, (xPos*30, yPos*30))
-							pygame.display.update()
+			y = int(pos[0]/30)
+			x = int(pos[1]/30)
+			print(y, x)
+			print(case[x][y])
+			if case[x][y] == 'X':
+				print('perdu')
+				quit()
+			elif case[x][y] == 0:
+				showNear(x, y)
+			else:
+				show = str(case[x][y])
+				text = font.render("{}".format(show), True, (200, 0, 0))
+				y *= 30
+				x *= 30
+				surface.blit(text, (y+8, x+8))
+				pygame.display.update()
 """
 for i in range(len(recList)):
 	for j in range(len(i))
