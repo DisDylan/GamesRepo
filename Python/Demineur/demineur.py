@@ -3,6 +3,8 @@ import time
 import pygame
 from pygame.locals import *
 
+pygame.init()
+
 BLOC = pygame.image.load('wall.png')
 
 
@@ -85,21 +87,36 @@ print(new_case)
 
 
 y_pos = 0
-recList = []
+recList = [[0 for col in range(largeur)] for row in range(hauteur)]
 for i in range(largeur):
 	x_pos = 0
 	for j in range(hauteur):
 		surface.blit(BLOC, (x_pos, y_pos))
 		rec = pygame.Rect(30, 30, x_pos, y_pos)
-		recList.append(rec)
+		recList[i][j] = rec
 		x_pos += 30
 	y_pos += 30
 pygame.display.update()
 print("x={}, y={}, x_pos={}, y_pos={}".format(x, y, x_pos, y_pos))
 
+font = pygame.font.SysFont("comicsansms", 30)
+
 continuer = True
 while continuer == True:
-	print("exe en cours")
+	for event in pygame.event.get():
+		if event.type == pygame.mouse.get_pressed():
+			yPos = 0
+			pos = pygame.mouse.get_pos()
+			for i in recList:
+				xPos = 0
+				for j in i:
+					if pos.colliderect(j):
+						if case[xPos][yPos] == 'X':
+							quit()
+						else:
+							text = font.render("".format(str(case[xPos][yPos])), True, (200, 0, 0))
+							surface.blit(text, (xPos*30, yPos*30))
+							pygame.display.update()
 """
 for i in range(len(recList)):
 	for j in range(len(i))
@@ -111,4 +128,14 @@ for i in range(len(recList)):
 				text = text.render(value, True, (0, 0, 0))
 				surface.blit(text, (i*size, j*size))
 				pygame.display.update()
+				
+while True:
+    for event in pygame.event.get():
+        if event.type == pygame.mouse.get_pressed():
+            ## if mouse is pressed get position of cursor ##
+            pos = pygame.mouse.get_pos()
+            ## check if cursor is on button ##
+            if button.collidepoint(pos):
+                ## exit ##
+                return
 				"""
