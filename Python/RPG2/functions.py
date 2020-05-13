@@ -171,7 +171,7 @@ def showItems(char):
 
 def buyPot(char):
     """
-    Buy a selected number of potions
+    GUI to buy potions
     """
     if randrange(100) < 50:
         continuer = 1
@@ -179,20 +179,25 @@ def buyPot(char):
         while continuer == 1:
             surface.blit(BUY_POT_BG, (0, 0))
             maxPot = floor(char.gold / potCost)
+            if maxPot == 0:
+                return
             text = font.render("Vous pouvez acheter {} potions en voulez vous ?".format(maxPot), True, GREEN_COLOR)
             surface.blit(text, (50, 500))
+            golds = font.render("Il vous reste {} pièces d'or".format(char.gold), True, YELLOW_COLOR)
+            surface.blit(text, (50, 500))
+            surface.blit(golds, (50, 550))
             pygame.display.update()
-            for event in pygame.event.get():
-                if event.type == KEYDOWN:
-                    if event.key == K_o:
-                        maxPot = floor(char.gold / potCost)
+            if char.gold >= potCost:
+                for event in pygame.event.get():
+                    if event.type == KEYDOWN:
                         if event.key == K_o:
-                            char.gold -= potCost
-                            char.pot += 1
+                            if event.key == K_o:
+                                char.gold -= potCost
+                                char.pot += 1
+                            elif event.key == K_n:
+                                continuer = 0
                         elif event.key == K_n:
                             continuer = 0
-                    elif event.key == K_n:
-                        continuer = 0
         """
         if buyOne.lower() == 'o':
             howMany = int(input("Vous pouvez acheter {} potions, combien en voulez vous ?".format(maxPot)))
