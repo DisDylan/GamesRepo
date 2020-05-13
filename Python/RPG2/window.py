@@ -32,6 +32,7 @@ WAY_PIC = pygame.image.load('sprites/map/sol.png')
 FIGHT_BG = pygame.image.load('sprites/map/backgroundFight.png')
 MENU_BG = pygame.image.load('sprites/map/bgMenu.png')
 POT_BG = pygame.image.load('sprites/map/bgPot.png')
+BUY_POT_BG = pygame.image.load('sprites/map/bgAlchy.png')
 
 ENNEMY_PIC = pygame.image.load('sprites/chars/wolf.png')
 

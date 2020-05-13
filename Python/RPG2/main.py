@@ -28,6 +28,7 @@ def main():
         if heroMove(yourChamp, HERO, hero_rect, walls, ennemiesMap):
             fight(yourChamp, versusList[0])
             del versusList[0]
+            buyPot(yourChamp)
             usePot(yourChamp)
             resetMap(ennemiesMap)
             makeMap(yourChamp, walls, ennemiesMap)

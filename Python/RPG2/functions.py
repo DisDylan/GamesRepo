@@ -173,24 +173,38 @@ def buyPot(char):
     """
     Buy a selected number of potions
     """
-    continuer = 1
-    potCost = 5
-    while continuer == 1:
-        for event in pygame.event.get():
-            if event.type == KEYDOWN:
-                if event.key == K_o:
-                    continuer = 0
-    if buyOne.lower() == 'o':
-        maxPot = floor(char.gold / potCost)
-        howMany = int(input("Vous pouvez acheter {} potions, combien en voulez vous ?".format(maxPot)))
-        if howMany > maxPot:
-            print("\n!!! La maison ne fait pas crédit !!!\n")
-            buyPot(char)
-        else:
-            char.gold -= (howMany * potCost)
-            char.pot += howMany
-            print("- - - Votre achat s'est bien déroulé.\n- - - Vous avez désormais {} potions.\n- - - Il vous reste {} pièces d'or.\n".format(char.pot, char.gold))
-    return
+    if randrange(100) < 50:
+        continuer = 1
+        potCost = 5
+        while continuer == 1:
+            surface.blit(BUY_POT_BG, (0, 0))
+            maxPot = floor(char.gold / potCost)
+            text = font.render("Vous pouvez acheter {} potions en voulez vous ?".format(maxPot), True, GREEN_COLOR)
+            surface.blit(text, (50, 500))
+            pygame.display.update()
+            for event in pygame.event.get():
+                if event.type == KEYDOWN:
+                    if event.key == K_o:
+                        maxPot = floor(char.gold / potCost)
+                        if event.key == K_o:
+                            char.gold -= potCost
+                            char.pot += 1
+                        elif event.key == K_n:
+                            continuer = 0
+                    elif event.key == K_n:
+                        continuer = 0
+        """
+        if buyOne.lower() == 'o':
+            howMany = int(input("Vous pouvez acheter {} potions, combien en voulez vous ?".format(maxPot)))
+            if howMany > maxPot:
+                print("\n!!! La maison ne fait pas crédit !!!\n")
+                buyPot(char)
+            else:
+                char.gold -= (howMany * potCost)
+                char.pot += howMany
+                print("- - - Votre achat s'est bien déroulé.\n- - - Vous avez désormais {} potions.\n- - - Il vous reste {} pièces d'or.\n".format(char.pot, char.gold))
+        return
+        """
 
 
 def totalArmor(char):
@@ -361,6 +375,9 @@ def getName(char):
                 elif event.key == K_RETURN:
                     char.name = char.name.capitalize()
                     continuer = 0
+        nameText = font.render(char.name, True, GREEN_COLOR)
+        surface.blit(nameText, (250, 350))
+        pygame.display.update()
 
 def collision(hero, listRect):
     """
