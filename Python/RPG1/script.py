@@ -113,7 +113,7 @@ def use_pot():
 	global my_char
 	#print('Vous avez {} points de vie restants sur {}.'.format(my_char.hp, my_char.max_hp))
 	if my_char.pot > 0:
-		use = input('Utiliser une potion ? Y/N:\n')
+		use = input('Utiliser une potion (+25)? Y/N:\n')
 		if use.lower() == 'y':
 			my_char.hp += 25
 			if my_char.hp > my_char.max_hp:
@@ -143,7 +143,7 @@ def main_game():
 		#ennemy.race = Ennemy.races[index_race]
 		if randrange(0, 101) < 15:
 			ennemy.make_boss()
-			print('Un boss est en approche !')
+			input('Un boss est en approche !')
 	else:
 		print('Chemin inconnu ...')
 		main_game()
@@ -154,8 +154,6 @@ def main_game():
 	counter = 1
 	max_enhp = ennemy.hp
 	while (my_char.hp > 0) and (ennemy.hp > 0):
-		use_pot()
-		input('Appuyez sur entrée pour afficher le tour de combat suivant\n')
 		my_char.hp -= ennemy.strength
 		ennemy.hp -= my_char.strength
 		print('-------------------------------\n{}e tour\n\n{} des {}:\nHP: {}/{}'.format(counter, ennemy.race, zones[z_index], ennemy.hp, max_enhp))
@@ -166,8 +164,8 @@ def main_game():
 			exit()
 		elif ennemy.hp <= 0:
 			print('Bravo, vous avez abattu votre adversaire !')
+			print('Montée au niveau {} !\n+5 HP, +1 Force'.format(my_char.niveau))
 			my_char.level_up()
-			print('Montée au niveau {} !\n(+5 HP, +1 Force)'.format(my_char.niveau))
 			print('\nHP: {}/{}; Force: {}.\n'.format(my_char.hp, my_char.max_hp, my_char.strength))
 			my_char.pot += ennemy.pot
 			print('Vous récupérez {} potions, vous en avez désormais {} dans l\'inventaire.'.format(ennemy.pot, my_char.pot))
@@ -185,9 +183,11 @@ def main_game():
 				else:
 					index_race += 1
 					nb_fight = 0
+					use_pot()
 					main_game()
 			else:
 				nb_fight += 1
+				use_pot()
 				main_game()
 
 def zone_boost():

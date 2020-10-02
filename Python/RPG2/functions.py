@@ -378,8 +378,8 @@ def getName(char):
                 elif event.key == K_z:
                     char.name += 'z'
                 elif event.key == K_RETURN:
-                    char.name = char.name.capitalize()
                     continuer = 0
+        char.name = char.name.capitalize()
         nameText = font.render(char.name, True, GREEN_COLOR)
         surface.blit(nameText, (250, 350))
         pygame.display.update()
