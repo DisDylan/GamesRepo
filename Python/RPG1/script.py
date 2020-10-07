@@ -98,37 +98,43 @@ class Ennemy(Character):
 		self.strength = int(self.strength * 2)
 		self.pot += 1
 
-# Liste d'ennemis par zones
-zones = ['plaines', 'mines', 'glaces', 'sables', 'enfers']
-hero_name = input('Bienvenue, veuillez entrez le nom de votre personnage :\n')
-my_char = Hero(hero_name)
-index_race = 0
-z_index = 0
-actual_zone = zones[z_index]
-ennemy = Ennemy(index_race)
-nb_fight = 0
-total_kills = 0
+# MENU
+def title_screen_selections():
+	option = input("> ")
+	if option.lower() == "jouer":
+		main_game()
+	elif option.lower() == "aide":
+		help_menu()
+	elif option.lower() == "quitter":
+		sys.exit()
+	while option.lower() not in ['jouer', 'aide', 'quitter']:
+		print("S'il vous plaît, entrez une commande valide.")
+		if option.lower() == "jouer":
+			main_game() # placeholder until written
+		elif option.lower() == "aide":
+			help_menu()
+		elif option.lower() == "quitter":
+			sys.exit()
 
-def use_pot():
-	global my_char
-	#print('Vous avez {} points de vie restants sur {}.'.format(my_char.hp, my_char.max_hp))
-	if my_char.pot > 0:
-		use = input('Utiliser une potion (+25)? Y/N:\n')
-		if use.lower() == 'y':
-			my_char.hp += 25
-			if my_char.hp > my_char.max_hp:
-				my_char.hp = my_char.max_hp
-			my_char.pot -= 1
-			print('Vous récuperez 25 points de vie !')
-			print('Vous avez maintenant {} points de vie sur {}, et il vous reste {} potions.'.format(my_char.hp, my_char.max_hp, my_char.pot))
-		if use.lower() == 'n':
-			pass
-		else:
-			use_pot()
-		return my_char.hp
-	else:
-		print('Désolé, vous n\'avez aucune potion en stock !')
-	return my_char.hp
+def title_screen():
+	os.system('clear')
+	print('###########################')
+	print('# Welcome to the text RPG #')
+	print('###########################')
+	print('         - Jouer -         ')
+	print('         - Aide -          ')
+	print('         - Quitter -       ')
+	print('       Bonne chance !      ')
+	title_screen_selections()
+
+def help_menu():
+	print('###########################')
+	print('# Welcome to the text RPG #')
+	print('###########################')
+	print('- Utilisez haut, bas gauche et droit pour bouger')
+	print('- Tapez vos commandes pour les executer')
+	print('- Utilisez "fouiller" pour inspecter quelque chose')
+	title_screen_selections()
 
 def main_game():
 	global my_char
@@ -206,4 +212,74 @@ def zone_boost():
 		ennemy.vie = ennemy.vie * 18
 		ennemy.strength = ennemy.strength * 18
 
-main_game()
+# Liste d'ennemis par zones
+title_screen()
+zones = ['plaines', 'mines', 'glaces', 'sables', 'enfers']
+hero_name = input('Bienvenue, veuillez entrez le nom de votre personnage :\n')
+my_char = Hero(hero_name)
+index_race = 0
+z_index = 0
+actual_zone = zones[z_index]
+ennemy = Ennemy(index_race)
+nb_fight = 0
+total_kills = 0
+
+def use_pot():
+	global my_char
+	#print('Vous avez {} points de vie restants sur {}.'.format(my_char.hp, my_char.max_hp))
+	if my_char.pot > 0:
+		use = input('Utiliser une potion (+25)? Y/N:\n')
+		if use.lower() == 'y':
+			my_char.hp += 25
+			if my_char.hp > my_char.max_hp:
+				my_char.hp = my_char.max_hp
+			my_char.pot -= 1
+			print('Vous récuperez 25 points de vie !')
+			print('Vous avez maintenant {} points de vie sur {}, et il vous reste {} potions.'.format(my_char.hp, my_char.max_hp, my_char.pot))
+		if use.lower() == 'n':
+			pass
+		else:
+			use_pot()
+		return my_char.hp
+	else:
+		print('Désolé, vous n\'avez aucune potion en stock !')
+	return my_char.hp
+
+# MENU
+def title_screen_selections():
+	option = input("> ")
+	if option.lower() == "jouer":
+		main_game()
+	elif option.lower() == "aide":
+		help_menu()
+	elif option.lower() == "quitter":
+		sys.exit()
+	while option.lower() not in ['jouer', 'aide', 'quitter']:
+		print("S'il vous plaît, entrez une commande valide.")
+		if option.lower() == "jouer":
+			main_game() # placeholder until written
+		elif option.lower() == "aide":
+			help_menu()
+		elif option.lower() == "quitter":
+			sys.exit()
+
+def title_screen():
+	os.system('clear')
+	print('###########################')
+	print('# Welcome to the text RPG #')
+	print('###########################')
+	print('         - Jouer -         ')
+	print('         - Aide -          ')
+	print('         - Quitter -       ')
+	print('       Bonne chance !      ')
+	title_screen_selections()
+
+def help_menu():
+	print('###########################')
+	print('# Welcome to the text RPG #')
+	print('###########################')
+	print('- Utilisez haut, bas gauche et droit pour bouger')
+	print('- Tapez vos commandes pour les executer')
+	print('- Utilisez "fouiller" pour inspecter quelque chose')
+	title_screen_selections()
+
