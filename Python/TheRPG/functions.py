@@ -19,6 +19,7 @@ def zone_boost(ennemy, actual_zone):
 
 #Asking user if he want use potion or not
 def use_pot(my_char):
+	input('Vos points de vie sont à {} sur {}.'.format(my_char.hp, my_char.max_hp))
 	if my_char.pot > 0:
 		use = input('Utiliser une potion (+25)? Y/N:\n')
 		if use.lower() == 'y':
@@ -27,7 +28,8 @@ def use_pot(my_char):
 				my_char.hp = my_char.max_hp
 			my_char.pot -= 1
 			print('Vous récuperez 25 points de vie !')
-			print('Vous avez maintenant {} points de vie sur {}, et il vous reste {} potions.'.format(my_char.hp, my_char.max_hp, my_char.pot))
+			input('Vous avez maintenant {} points de vie sur {}, et il vous reste {} potions.'.format(my_char.hp, my_char.max_hp, my_char.pot))
+			os.system('clear')
 		if use.lower() == 'n':
 			pass
 		else:
