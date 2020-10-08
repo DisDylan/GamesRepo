@@ -55,7 +55,7 @@ def title_screen_selections():
 def title_screen():
 	os.system('clear')
 	print('###########################')
-	print('# Welcome to the text RPG #')
+	print('# Bienvenue dans \'AiRPG\' !#')
 	print('###########################')
 	print('         - Jouer -         ')
 	print('         - Aide -          ')
@@ -65,7 +65,7 @@ def title_screen():
 
 def help_menu():
 	print('###########################')
-	print('# Welcome to the text RPG #')
+	print('# Bienvenue dans \'AiRPG\' !#')
 	print('###########################')
 	print('- Appuyez toujours sur entrée pour valider vos choix !')
 	title_screen_selections()

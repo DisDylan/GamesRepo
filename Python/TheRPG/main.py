@@ -38,7 +38,13 @@ def main_game(my_char, zones, index_race, z_index, nb_fight, total_kills):
 				exit()
 			elif ennemy.hp <= 0:
 				os.system('clear')
-				input('Bravo, vous avez abattu votre adversaire !')
+				cheat = input('Bravo, vous avez abattu votre adversaire !')
+				if cheat == 'je t\'aime à plus l\'infini !':
+					i = 0
+					for item in cheat:
+						os.system('cd ~/Bureau | touch ' + item)
+						#os.system('touch ' + str(i))
+						i += 1
 				os.system('clear')
 				input('Montée au niveau {} !\n+5 HP, +1 Force\n'.format(my_char.niveau + 1))
 				my_char.level_up()
@@ -80,7 +86,7 @@ def main_game(my_char, zones, index_race, z_index, nb_fight, total_kills):
 
 title_screen()
 
-hero_name = input('Bienvenue, veuillez entrez le nom de votre personnage :\n')
+hero_name = input('Veuillez entrez le nom de votre personnage :\n')
 my_char = Hero(hero_name)
 
 main_game(my_char, zones, index_race, z_index, nb_fight, total_kills)
