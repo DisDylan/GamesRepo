@@ -32,7 +32,7 @@ class Hero(Character):
 		self.max_hp += 5
 		self.hp += 2
 		self.cap = 20
-		if (self.total_fp < self.cap) or (self.total_fp < self.cap):
+		if (self.total_fp < self.cap) and (self.total_fp < self.cap):
 			point = input('Mettre un point en Force [+1] ; [{}/{}]\nOU\nMettre un point en Vie [+3] ; [{}/{}]\n> '.format(self.total_fp, self.cap, self.total_vp, self.cap))
 			if point.lower() == 'force':
 				if self.total_fp < self.cap:

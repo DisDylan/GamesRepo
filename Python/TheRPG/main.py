@@ -13,6 +13,7 @@ def main_game(my_char, zones, index_race, z_index, nb_fight, total_kills):
 	print('=========-Quitter-==========')
 	print('============================')
 	way = input('> ')
+	os.system('clear')
 	if way.lower() == 'avancer':
 		actual_zone = zones[z_index]
 		ennemy = Ennemy(index_race)
@@ -20,11 +21,13 @@ def main_game(my_char, zones, index_race, z_index, nb_fight, total_kills):
 			ennemy.make_boss()
 			input('Un boss est en approche !')
 		zone_boost(ennemy, actual_zone)
+		max_enhp = ennemy.hp
 		print('Un ennemi apparaît ! C\'est un {} des {}!'.format(ennemy.race, zones[z_index]))
-		print('\nHP: {}/{}; Force: {}.\n'.format(my_char.hp, my_char.max_hp, my_char.strength))
+		input()
+		print('Ses statistiques sont les suivantes :')
+		print('\nHP: {}/{}; Force: {}.\n'.format(ennemy.hp, max_enhp, ennemy.strength))
 		print('Vous vous battez à mort !')
 		counter = 1
-		max_enhp = ennemy.hp
 		while (my_char.hp > 0) and (ennemy.hp > 0):
 			my_char.hp -= ennemy.strength
 			ennemy.hp -= my_char.strength
@@ -32,14 +35,13 @@ def main_game(my_char, zones, index_race, z_index, nb_fight, total_kills):
 			os.system('clear')
 			if ennemy.hp < 0:
 				ennemy.hp = 0
-			print('-------------------------------\n{}e tour\n\n{} des {}:\nHP: {}/{}'.format(counter, ennemy.race, zones[z_index], ennemy.hp, max_enhp))
-			print('\n{}:\nHP: {}/{}; Force: {}.\n-------------------------------'.format(my_char.name, my_char.hp, my_char.max_hp, my_char.strength))
+			print('-------------------------------\n{}e tour\n\n{} des {}:\nHP: {}/{}.'.format(counter, ennemy.race, zones[z_index], ennemy.hp, max_enhp))
+			print('\n{}:\nHP: {}/{}.\n-------------------------------'.format(my_char.name, my_char.hp, my_char.max_hp))
 			counter += 1
 			if my_char.hp <= 0:
 				print('Fin de partie ! {} adversaires battus !'.format(total_kills))
 				exit()
 			elif ennemy.hp <= 0:
-				os.system('clear')
 				cheat = input('Bravo, vous avez abattu votre adversaire !')
 				if cheat == 'je t\'aime à plus l\'infini !':
 					i = 0
