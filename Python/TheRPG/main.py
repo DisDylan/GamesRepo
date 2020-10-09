@@ -4,7 +4,9 @@ from variables import *
 
 def main_game(my_char, zones, index_race, z_index, nb_fight, total_kills):
 	os.system('clear')
-	print('---- Vous êtes niveau {} ---'.format(my_char.niveau))
+	print('----- {} : Niveau {}'.format(my_char.name, my_char.niveau))
+	print('--- Vie: {}/{} | Force: {}'.format(my_char.hp, my_char.max_hp, my_char.strength))
+	print('--- Clés: {} | Potions: {}'.format(my_char.keys, my_char.pot))
 	print('============================')
 	print('=========-Avancer-==========')
 	print('=======-Sauvegarder-========')
@@ -51,7 +53,9 @@ def main_game(my_char, zones, index_race, z_index, nb_fight, total_kills):
 				input('\nHP: {}/{}; Force: {}.\n'.format(my_char.hp, my_char.max_hp, my_char.strength))
 				os.system('clear')
 				my_char.pot += ennemy.pot
+				my_char.keys += ennemy.keys
 				input('Vous récupérez {} potions, vous en avez désormais {} dans l\'inventaire.'.format(ennemy.pot, my_char.pot))
+				chest(my_char)
 				total_kills += 1
 				if nb_fight == 1:
 					if ennemy.race == Ennemy.races[len(Ennemy.races)-1]:
@@ -86,7 +90,7 @@ def main_game(my_char, zones, index_race, z_index, nb_fight, total_kills):
 
 title_screen()
 
-hero_name = input('Veuillez entrez le nom de votre personnage :\n')
+hero_name = input('Veuillez entrez le nom de votre personnage\n> ')
 my_char = Hero(hero_name)
 
 main_game(my_char, zones, index_race, z_index, nb_fight, total_kills)
