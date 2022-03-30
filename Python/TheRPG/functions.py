@@ -68,32 +68,49 @@ def chest(my_char):
 			input('Mais vous n\'avez pas de clé :(')
 
 # MENU
-def title_screen_selections():
+def title_screen_selections(my_char):
 	option = input("> ")
 	if option.lower() == "jouer":
-		return
+		return 2
+	elif option.lower() == "charger":
+		#load stats
+		return 3
 	elif option.lower() == "aide":
 		help_menu()
 	elif option.lower() == "quitter":
 		sys.exit()
 	else:
 		print("Entrez une commande valide.")
-		title_screen_selections()
+		title_screen_selections(my_char)
 
-def title_screen():
+def title_screen(my_char):
 	os.system('clear')
 	print('###########################')
 	print('# Bienvenue dans \'AiRPG\' !#')
 	print('###########################')
 	print('         - Jouer -         ')
+	print('         - Charger -         ')
 	print('         - Aide -          ')
 	print('         - Quitter -       ')
 	print('       Bonne chance !      ')
-	title_screen_selections()
+	title_screen_selections(my_char)
 
 def help_menu():
 	print('###########################')
 	print('# Bienvenue dans \'AiRPG\' !#')
 	print('###########################')
 	print('- Appuyez toujours sur entrée pour valider vos choix !')
-	title_screen_selections()
+	title_screen_selections(my_char)
+
+def load(my_char):
+	save = open('save.txt', r)
+	my_char.name =
+	my_char.niveau =
+	my_char.max_hp =
+	my_char.hp =
+	my_char.xp =
+	my_char.pot =
+	my_char.keys =
+	my_char.strength =
+	my_char.total_fp =
+	my_char.total_vp =

@@ -81,7 +81,9 @@ def main_game(my_char, zones, index_race, z_index, nb_fight, total_kills):
 					use_pot(my_char)
 					main_game(my_char, zones, index_race, z_index, nb_fight, total_kills)
 	elif way.lower() == 'sauvegarder':
-		# make a file to save progress
+		save = open('save.txt', w)
+		save.write('{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n}'.format(my_char.name, my_char.niveau, my_char.max_hp, my_char.hp, my_char.xp, my_char.pot, my_char.keys, my_char.strength, my_char.total_fp, my_char.total_vp))
+		save.close
 		main_game(my_char, zones, index_race, z_index, nb_fight, total_kills)
 	elif way.lower() == 'quitter':
 		sys.exit()
@@ -89,10 +91,10 @@ def main_game(my_char, zones, index_race, z_index, nb_fight, total_kills):
 		print('\n!!! Choix non valide !!!')
 		main_game(my_char, zones, index_race, z_index, nb_fight, total_kills)
 
-
-title_screen()
-
-hero_name = input('Veuillez entrez le nom de votre personnage\n> ')
-my_char = Hero(hero_name)
+my_char = Hero('none')
+if title_screen(my_char) == 3:
+	load(my_char)
+else
+	my_char.name = input('Veuillez entrez le nom de votre personnage\n> ')
 
 main_game(my_char, zones, index_race, z_index, nb_fight, total_kills)
